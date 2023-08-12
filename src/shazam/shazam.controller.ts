@@ -2,11 +2,10 @@
 
 import { Controller, Get, Query } from '@nestjs/common';
 import { ShazamService } from './shazam.service';
-import { logger } from 'src/winston.config';
 
 @Controller('shazam')
 export class ShazamController {
-  constructor(private shazamService: ShazamService) {}
+  constructor(private shazamService: ShazamService) { }
 
   @Get('top-songs')
   getTopSongs(
@@ -14,5 +13,13 @@ export class ShazamController {
     @Query('l') l: string
   ) {
     return this.shazamService.getTopSongs(id, l);
+  }
+
+  @Get('list-recomendations')
+  getListRecomendations(
+    @Query('key') key: number,
+    @Query('locale') locale: string,
+  ) {
+    return this.shazamService.getListRecomendations(key, locale)
   }
 }
