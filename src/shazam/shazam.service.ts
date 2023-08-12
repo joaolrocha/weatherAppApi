@@ -61,5 +61,27 @@ export class ShazamService {
       logger.error('Failed to fetch list of recomendations')
     }
   }
+
+  async getPlaylistByMusicType (term: string, offset: number, limit: number ) {
+    const apiKey = this.configService.get<string>('RAPIDAPI_KEY');
+    const baseUrl = this.configService.get<string>('BASE_URL_SHAZAM');
+
+    const options = {
+      method: 'GET',
+      url: `${baseUrl}songs/list-recommendations`,
+      params: {term, offset, limit},
+      headers: {
+        'X-RapidAPI-Key': apiKey,
+        'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
+      }
+    };
+
+    try { 
+      const response = await this.httpService.request(options).pipe(map(resp => resp.data))
+      return response 
+    } catch (error) {
+      logger.error('Failed to fetch list of musics by type')
+    }
+  }
 }
 

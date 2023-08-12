@@ -22,4 +22,13 @@ export class ShazamController {
   ) {
     return this.shazamService.getListRecomendations(key, locale)
   }
+
+  @Get('search')
+  getPlaylistByMusicType(
+    @Query('term') term: string,
+    @Query('offset') offset: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.shazamService.getPlaylistByMusicType(term, offset, limit)
+  }  
 }
